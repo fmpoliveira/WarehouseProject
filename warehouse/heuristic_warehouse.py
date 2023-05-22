@@ -21,10 +21,10 @@ class HeuristicWarehouse(Heuristic[WarehouseProblemSearch, WarehouseState]):
             for j in range(state.columns):
                 # Blank is ignored so that the heuristic is admissible
                 #if state.matrix[i][j] != state.matrix[state.goal.line][state.goal.column]:
-                zaca = state.matri[i][j]
-                if state.matrix[i][j] != 0:
-                    h += abs(i - self._lines_goal_matrix[state.matrix[i][j]]) + abs(j - self._cols_goal_matrix[state.matrix[i][j]])
-                    #h += 1
+                zaca = state.matrix[i][j]
+                if state.matrix[i][j] == 3 or state.matrix[i][j] == 2:
+                    #h += abs(i - self._lines_goal_matrix[state.matrix[i][j]]) + abs(j - self._cols_goal_matrix[state.matrix[i][j]])
+                    h += (i + 1)
                     #print("h= " + h)
         return h
 

@@ -266,7 +266,7 @@ class Window(tk.Tk):
         # End of constructor -----------------------------------
 
     def problem_button_clicked(self):
-        filename = fd.askopenfilename(initialdir='.')
+        filename = fd.askopenfilename(initialdir='./data_sets')
         if filename:
             matrix, num_rows, num_columns = read_state_from_txt_file(filename)
             self.initial_state = WarehouseState(matrix, num_rows, num_columns)
