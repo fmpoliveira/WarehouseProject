@@ -64,28 +64,36 @@ class WarehouseState(State[Action]):
         if self.can_move_up():
             self.matrix[self.line_forklift][self.column_forklift] = self.matrix[self.line_forklift - 1][self.column_forklift]
             self.line_forklift -= 1
-            self.matrix[self.line_forklift][self.column_forklift] = 0
+            self.set_forklift(self.line_forklift, self.column_forklift)
+            self.matrix[self.line_forklift][self.column_forklift] = constants.FORKLIFT
+            #print("Mexe cima")
 
     def move_right(self) -> None:
         # TODO
         if self.can_move_right():
             self.matrix[self.line_forklift][self.column_forklift] = self.matrix[self.line_forklift][self.column_forklift + 1]
             self.column_forklift += 1
-            self.matrix[self.line_forklift][self.column_forklift] = 0
+            self.set_forklift(self.line_forklift, self.column_forklift)
+            self.matrix[self.line_forklift][self.column_forklift] = constants.FORKLIFT
+            #print("Mexe direita")
 
     def move_down(self) -> None:
         # TODO
         if self.can_move_down():
             self.matrix[self.line_forklift][self.column_forklift] = self.matrix[self.line_forklift + 1][self.column_forklift]
             self.line_forklift += 1
-            self.matrix[self.line_forklift][self.column_forklift] = 0
+            self.set_forklift(self.line_forklift, self.column_forklift)
+            self.matrix[self.line_forklift][self.column_forklift] = constants.FORKLIFT
+            #print("Mexe baixo")
 
     def move_left(self) -> None:
         # TODO
         if self.can_move_left():
             self.matrix[self.line_forklift][self.column_forklift] = self.matrix[self.line_forklift][self.column_forklift - 1]
             self.column_forklift -= 1
-            self.matrix[self.line_forklift][self.column_forklift] = 0
+            self.set_forklift(self.line_forklift, self.column_forklift)
+            self.matrix[self.line_forklift][self.column_forklift] = constants.FORKLIFT
+            #print("Mexe esqeurda")
 
     def get_cell_color(self, row: int, column: int) -> Color:
         if row == self.line_exit and column == self.column_exit and (
@@ -129,3 +137,4 @@ class WarehouseState(State[Action]):
 
     def set_goal(self, line, column):
         self.goal = Cell(line, column)
+

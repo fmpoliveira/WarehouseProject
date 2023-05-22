@@ -1,0 +1,1 @@
+Cell 1 se for objeto, calcula-se diretamente da sua posição ou colocamos num corredor?

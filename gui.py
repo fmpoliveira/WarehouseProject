@@ -620,9 +620,12 @@ class SearchSolver(threading.Thread):
         for pair in self.agent.pairs:
             if self.agent.search_method.stopped:
                 return
-            state = copy.deepcopy(self.agent.initial_environment)
+            state = copy.copy(self.agent.initial_environment)
             state.set_goal(pair.cell2.line, pair.cell2.column)
             state.set_exit(self.agent.exit.line, self.agent.exit.column)
+
+            #print(pair.cell1)
+            #print(pair.cell2)
 
             if pair.cell1 not in self.agent.forklifts:
                 if pair.cell1.column + 1 < state.columns and state.matrix[pair.cell1.line][pair.cell1.column + 1] == constants.EMPTY:
@@ -633,14 +636,13 @@ class SearchSolver(threading.Thread):
                 state.set_forklift(pair.cell1.line, pair.cell1.column)
 
             if pair.cell2 != self.agent.exit:
-                if pair.cell2.column + 1 < state.columns and state.matrix[pair.cell2.line][pair.cell2.column + 1] == constants.EXIT:
+                if pair.cell2.column + 1 < state.columns and state.matrix[pair.cell2.line][pair.cell2.column + 1] == constants.EMPTY:
                     goal_cell = Cell(pair.cell2.line, pair.cell2.column + 1)
                 else:
                     goal_cell = Cell(pair.cell2.line, pair.cell2.column - 1)
             else:
                 goal_cell = pair.cell2
 
-            goal = goal_cell
             problem = WarehouseProblemSearch(state, goal_cell)
 
             solution = self.agent.solve_problem(problem)
@@ -648,7 +650,9 @@ class SearchSolver(threading.Thread):
             # criou classe em que calucla pair.solution = WharehouseSolution(solution.problem, solution.goal_cell)
             pair.solution = solution
             print(pair.solution)
-
+            #if(solution is not None):
+                #print(pair.cell1, goal_cell, solution, solution.actions, solution.problem)
+            print("------------")
         self.agent.search_method.stopped = True
         self.gui.problem_ga = WarehouseProblemGA(self.agent)
         self.gui.manage_buttons(data_set=tk.NORMAL, runSearch=tk.DISABLED, runGA=tk.NORMAL, stop=tk.DISABLED,
