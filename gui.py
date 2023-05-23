@@ -646,12 +646,11 @@ class SearchSolver(threading.Thread):
             problem = WarehouseProblemSearch(state, goal_cell)
 
             solution = self.agent.solve_problem(problem)
-            #pair.value = int(solution.cost)
+            pair.value = int(solution.cost)
             # criou classe em que calucla pair.solution = WharehouseSolution(solution.problem, solution.goal_cell)
             pair.solution = solution
-            print(pair.solution)
-            #if(solution is not None):
-                #print(pair.cell1, goal_cell, solution, solution.actions, solution.problem)
+            print("valor: ", pair.value, "start: ", pair.cell1, "finish: ", goal_cell)
+            print("Solution: ",pair.solution.actions)
             print("------------")
         self.agent.search_method.stopped = True
         self.gui.problem_ga = WarehouseProblemGA(self.agent)
