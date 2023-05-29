@@ -14,19 +14,10 @@ class HeuristicWarehouse(Heuristic[WarehouseProblemSearch, WarehouseState]):
 
     def compute(self, state: WarehouseState) -> float:
         # TODO
-        #print("lines", self._lines_goal_matrix)
-        #print("cols", self._cols_goal_matrix)
-        h = 0
-        for i in range(state.rows):
-            for j in range(state.columns):
-                # Blank is ignored so that the heuristic is admissible
-                #if state.matrix[i][j] != state.matrix[state.goal.line][state.goal.column]:
-                #zaca = state.matrix[i][j]
-                if state.matrix[i][j] == constants.EXIT or state.matrix[i][j] == constants.PRODUCT:
-                    #h += abs(i - self._lines_goal_matrix[state.matrix[i][j]]) + abs(j - self._cols_goal_matrix[state.matrix[i][j]])
-                    h += (i + 1)
-                    #print("h= " + h)
-        return h
+        goal_position = state.goal
+        forklift_position = state.forklift
+        return abs(goal_position.column - forklift_position.column) + abs(goal_position.line - forklift_position.line)
+
 
     def __str__(self):
         return "# TODO"
