@@ -92,7 +92,7 @@ class WarehouseState(State[Action]):
     def move_down(self) -> None:
         # TODO
         if self.can_move_down():
-            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.column + 1][self.forklift.column]
+            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line + 1][self.forklift.column]
             #self.line_forklift += 1
             self.set_forklift(self.forklift.line + 1, self.forklift.column)
             self.matrix[self.forklift.line][self.forklift.column] = constants.FORKLIFT

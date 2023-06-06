@@ -319,7 +319,7 @@ class Window(tk.Tk):
             Recombination2(float(self.entry_recombination_prob.get())) if recombination_methods_index == 1 else \
                 Recombination3(float(self.entry_recombination_prob.get()))
 
-        mutation_methods_index = self.combo_recombination_methods.current()
+        mutation_methods_index = self.combo_mutation_methods.current()
         mutation_method = MutationInsert(
             float(self.entry_mutation_prob.get())) if mutation_methods_index == 0 else \
             Mutation2(float(self.entry_mutation_prob.get())) if mutation_methods_index == 1 else \
@@ -624,9 +624,6 @@ class SearchSolver(threading.Thread):
             state.set_goal(pair.cell2.line, pair.cell2.column)
             state.set_exit(self.agent.exit.line, self.agent.exit.column)
 
-            #print(pair.cell1)
-            #print(pair.cell2)
-
             if pair.cell1 not in self.agent.forklifts:
                 if pair.cell1.column + 1 < state.columns and state.matrix[pair.cell1.line][pair.cell1.column + 1] == constants.EMPTY:
                     state.set_forklift(pair.cell1.line, pair.cell1.column + 1)
@@ -650,7 +647,6 @@ class SearchSolver(threading.Thread):
             # criou classe em que calucla pair.solution = WharehouseSolution(solution.problem, solution.goal_cell)
             pair.solution = solution
             print("valor: ", pair.value, "start: ", pair.cell1, "finish: ", goal_cell)
-            print("Solution: ",pair.solution.actions)
             print("------------")
         self.agent.search_method.stopped = True
         self.gui.problem_ga = WarehouseProblemGA(self.agent)
