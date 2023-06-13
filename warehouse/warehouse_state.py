@@ -122,7 +122,8 @@ class WarehouseState(State[Action]):
         switcher = {
             constants.FORKLIFT: constants.COLORFORKLIFT,
             constants.SHELF: constants.COLORSHELF,
-            constants.EMPTY: constants.COLOREMPTY
+            constants.EMPTY: constants.COLOREMPTY,
+            constants.EXIT: constants.COLOREXIT
         }
         return switcher.get(self.matrix[row][column], constants.COLOREMPTY)
 

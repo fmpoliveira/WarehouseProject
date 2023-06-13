@@ -63,10 +63,10 @@ class WarehouseIndividual(IntVectorIndividual):
             forklift = self.problem.forklifts[index + 1]
             aux.insert(0, forklift)
             aux.insert(len(aux), self.problem.agent_search.exit)
-            self.weight = self.compute_weight(aux)
+            self.weight += self.compute_weight(aux)
             self.problem.path.append(aux)
 
-        self.fitness = self.values[0]
+        self.fitness = self.weight
 
         return self.fitness
 
@@ -105,8 +105,9 @@ class WarehouseIndividual(IntVectorIndividual):
             self.problem.agent_search.weight_values.append(total)
             self.problem.agent_search.weight_values.sort(reverse=True)
 
-        self.values.append(total)
-        self.values.sort(reverse=True)
+        if total not in self.values:
+            self.values.append(total)
+            self.values.sort(reverse=True)
 
         return total
 
