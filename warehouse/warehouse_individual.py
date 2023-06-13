@@ -91,8 +91,7 @@ class WarehouseIndividual(IntVectorIndividual):
 
             list_actions = copy.deepcopy(list_cell.actions)
 
-            if is_reversed:
-                print("reversi")
+            #if is_reversed:
                 #self.reverse_actions(list_actions)
 
             self.paths_forklifts[arr[0]].append(list_actions)

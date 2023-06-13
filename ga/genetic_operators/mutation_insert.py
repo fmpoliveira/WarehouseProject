@@ -8,9 +8,9 @@ class MutationInsert(Mutation):
         super().__init__(probability)
 
     def mutate(self, ind: IntVectorIndividual) -> None:
-
         num_genes = len(ind.genome)
         cut1 = GeneticAlgorithm.rand.randint(0, num_genes - 1)
+
         cut2 = cut1
         while (cut1 == cut2):
             cut2 = GeneticAlgorithm.rand.randint(0, num_genes - 1)
@@ -19,6 +19,7 @@ class MutationInsert(Mutation):
             cut1, cut2 = cut2, cut1
 
         mid = int(cut1 + ((cut2 + 1) - cut1) / 2)
+
         endCount = cut2
 
         for i in range(cut1, mid):
