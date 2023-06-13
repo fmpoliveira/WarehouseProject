@@ -12,13 +12,14 @@ class WarehouseIndividual(IntVectorIndividual):
     def __init__(self, problem: "WarehouseProblem", num_genes: int):
         super().__init__(problem, num_genes)
         self.weight = None  # sum of the path since the start of the forklift until the exit
-        self.values = []
+        self.worst_value = None
         self.paths_forklifts = {}
         # TODO
 
     def compute_fitness(self) -> float:
         # TODO
         self.weight = 0
+        self.worst_value = 0
         aux = []
         index = None
 
@@ -63,10 +64,10 @@ class WarehouseIndividual(IntVectorIndividual):
             forklift = self.problem.forklifts[index + 1]
             aux.insert(0, forklift)
             aux.insert(len(aux), self.problem.agent_search.exit)
-            self.weight += self.compute_weight(aux)
+            self.weight = self.compute_weight(aux)
             self.problem.path.append(aux)
 
-        self.fitness = self.weight
+        self.fitness = self.worst_value
 
         return self.fitness
 
@@ -105,9 +106,9 @@ class WarehouseIndividual(IntVectorIndividual):
             self.problem.agent_search.weight_values.append(total)
             self.problem.agent_search.weight_values.sort(reverse=True)
 
-        if total not in self.values:
-            self.values.append(total)
-            self.values.sort(reverse=True)
+        # se o total calculado for maior que o pior resultado possivel nesta iteração, troca
+        if total > self.worst_value:
+            self.worst_value = total
 
         return total
 
@@ -190,7 +191,7 @@ class WarehouseIndividual(IntVectorIndividual):
         new_instance.genome = self.genome.copy()
         new_instance.fitness = self.fitness
         new_instance.weight = self.weight
-        new_instance.values = self.values
+        new_instance.worst_value = self.worst_value
         new_instance.paths_forklifts = self.paths_forklifts
         # TODO done
         return new_instance
