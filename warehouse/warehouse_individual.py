@@ -170,13 +170,13 @@ class WarehouseIndividual(IntVectorIndividual):
 
     def obtain_all_path(self):
         # TODO
-        return self.problem.path, len(self.problem.path)
+        pass
 
     def __str__(self):
         string = 'Fitness: ' + f'{self.fitness}' + '\n'
         string += str(self.genome) + "\n\n"
-        string += '\nFitness: ' + f'{self.fitness}'
-
+        string += '\nFitness: ' + f'{self.fitness}' + "\n\n"
+        string += '\nWorst Fitness ' + str(self.problem.agent_search.weight_values[0]) + "\n\n"
         return string
 
     def better_than(self, other: "WarehouseIndividual") -> bool:
@@ -189,5 +189,7 @@ class WarehouseIndividual(IntVectorIndividual):
         new_instance.genome = self.genome.copy()
         new_instance.fitness = self.fitness
         new_instance.weight = self.weight
+        new_instance.values = self.values
+        new_instance.paths_forklifts = self.paths_forklifts
         # TODO done
         return new_instance

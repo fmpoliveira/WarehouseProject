@@ -21,7 +21,7 @@ class Mutation3(Mutation):
 
         print("genome", ind.genome)
 
-        ind.genome.remove(rand_pos)
+        ind.genome.pop(rand_pos)
 
         print("genome_ remove", ind.genome)
 

@@ -190,8 +190,7 @@ class Window(tk.Tk):
         self.text_best = tk.Text(master=self.panel_best, state="normal", height=20, width=40)
         self.text_best.pack()
 
-        self.text_worst = tk.Text(master=self.panel_best, state="normal", height=20, width=40)
-        self.text_worst.pack()
+
 
         # 3 - BOTTOM PANEL --------------------------------------------------
 
@@ -497,9 +496,6 @@ class Window(tk.Tk):
             self.generation_values.append(self.generations)
             self.average_values.append(ga_info.average_fitness)
             self.best_values.append(ga_info.best.fitness)
-            self.text_worst.delete("1.0", "end")
-            self.text_worst.insert(tk.END, str(ga_info.best.problem.agent_search.weight_values[0]))
-            print("Worst fitness value: ", ga_info.best.problem.agent_search.weight_values[0])
             self.generations += 1
             self.update_plot()
         self.update_idletasks()
