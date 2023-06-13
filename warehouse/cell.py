@@ -11,7 +11,14 @@ class Cell:
     def compareWithReversedCells(self, other: object) -> bool:
         if not isinstance(other, Cell):
             return False
-        return (self.line == other.line and self.column == other.column) or (self.line == other.column and self.column == other.line)
+        return (self.line == other.line and self.column == other.column) or (
+                    self.line == other.column and self.column == other.line)
 
     def __str__(self) -> str:
         return f"{self.line}-{self.column}"
+
+    def hash(self):
+        return str(self.line) + "_" + str(self.column)
+
+    def __hash__(self):
+        return hash(str(self.line) + "_" + str(self.column))

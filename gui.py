@@ -190,6 +190,9 @@ class Window(tk.Tk):
         self.text_best = tk.Text(master=self.panel_best, state="normal", height=20, width=40)
         self.text_best.pack()
 
+        self.text_worst = tk.Text(master=self.panel_best, state="normal", height=20, width=40)
+        self.text_worst.pack()
+
         # 3 - BOTTOM PANEL --------------------------------------------------
 
         self.button_experiments = tk.Button(master=self.panel_bottom, text='Open experiments',
@@ -450,8 +453,6 @@ class Window(tk.Tk):
         self.entry_status.delete(0, tk.END)
         self.entry_status.insert(tk.END, 'Running')
 
-
-
     def stop_experiments_button_clicked(self):
         if self.experiments_runner is not None:
             self.experiments_runner.stop()
@@ -480,7 +481,6 @@ class Window(tk.Tk):
 
     def generation_ended(self):
 
-
         if not self.queue.empty():
             ga_info = self.queue.get()
 
@@ -497,6 +497,9 @@ class Window(tk.Tk):
             self.generation_values.append(self.generations)
             self.average_values.append(ga_info.average_fitness)
             self.best_values.append(ga_info.best.fitness)
+            self.text_worst.delete("1.0", "end")
+            self.text_worst.insert(tk.END, str(ga_info.best.problem.agent_search.weight_values[0]))
+            print("Worst fitness value: ", ga_info.best.problem.agent_search.weight_values[0])
             self.generations += 1
             self.update_plot()
         self.update_idletasks()
@@ -602,6 +605,7 @@ class ExperimentsRunner(threading.Thread):
             experiment.run()
 
         self.gui.text_best.insert(tk.END, '')
+        self.gui.text_worst.insert(tk.END, '')
         if self.thread_running:
             self.gui.entry_status.delete(0, tk.END)
             self.gui.entry_status.insert(tk.END, 'Done')
@@ -630,7 +634,8 @@ class SearchSolver(threading.Thread):
             state.set_exit(self.agent.exit.line, self.agent.exit.column)
 
             if pair.cell1 not in self.agent.forklifts:
-                if pair.cell1.column + 1 < state.columns and state.matrix[pair.cell1.line][pair.cell1.column + 1] == constants.EMPTY:
+                if pair.cell1.column + 1 < state.columns and state.matrix[pair.cell1.line][
+                    pair.cell1.column + 1] == constants.EMPTY:
                     state.set_forklift(pair.cell1.line, pair.cell1.column + 1)
                 else:
                     state.set_forklift(pair.cell1.line, pair.cell1.column - 1)
@@ -638,7 +643,8 @@ class SearchSolver(threading.Thread):
                 state.set_forklift(pair.cell1.line, pair.cell1.column)
 
             if pair.cell2 != self.agent.exit:
-                if pair.cell2.column + 1 < state.columns and state.matrix[pair.cell2.line][pair.cell2.column + 1] == constants.EMPTY:
+                if pair.cell2.column + 1 < state.columns and state.matrix[pair.cell2.line][
+                    pair.cell2.column + 1] == constants.EMPTY:
                     goal_cell = Cell(pair.cell2.line, pair.cell2.column + 1)
                 else:
                     goal_cell = Cell(pair.cell2.line, pair.cell2.column - 1)

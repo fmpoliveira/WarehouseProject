@@ -8,7 +8,7 @@ class Mutation2(Mutation):
         super().__init__(probability)
 
     def mutate(self, ind: IntVectorIndividual) -> None:
-        # TODO
+
         pass
 
     def __str__(self):
