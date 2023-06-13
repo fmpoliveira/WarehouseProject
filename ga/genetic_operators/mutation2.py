@@ -1,5 +1,7 @@
+from ga.genetic_algorithm import GeneticAlgorithm
 from ga.individual_int_vector import IntVectorIndividual
 from ga.genetic_operators.mutation import Mutation
+import random
 
 class Mutation2(Mutation):
     def __init__(self, probability):

@@ -19,6 +19,7 @@ class WarehouseAgentSearch(Agent):
         self.heuristic = HeuristicWarehouse()
         self.forklifts = []
         self.products = []
+        self.solution_by_pair = {}
         self.exit = None
         self.pairs = []
         for i in range(environment.rows):
@@ -45,6 +46,11 @@ class WarehouseAgentSearch(Agent):
         for a in self.forklifts:
             self.pairs.append(Pair(a, self.exit))
 
+    def set_solution_by_pair(self, key, solution):
+        self.solution_by_pair[key] = solution
+
+    def get_solution_by_pair(self, key):
+        return self.solution_by_pair[key]
     def __str__(self) -> str:
         str = "Pairs:\n"
         for p in self.pairs:

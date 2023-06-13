@@ -19,7 +19,8 @@ class WarehouseState(State[Action]):
 
         self.rows = rows
         self.columns = columns
-        self.matrix = matrix
+        self.matrix = np.copy(matrix).astype(int)
+
 
         self.line_forklift = None
         self.column_forklift = None
@@ -153,5 +154,6 @@ class WarehouseState(State[Action]):
 
     def set_goal(self, line, column):
         self.goal = Cell(line, column)
+
 
 

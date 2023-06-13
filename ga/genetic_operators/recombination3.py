@@ -1,3 +1,4 @@
+from ga.genetic_algorithm import GeneticAlgorithm
 from ga.genetic_operators.recombination import Recombination
 from ga.individual import Individual
 

@@ -450,6 +450,8 @@ class Window(tk.Tk):
         self.entry_status.delete(0, tk.END)
         self.entry_status.insert(tk.END, 'Running')
 
+
+
     def stop_experiments_button_clicked(self):
         if self.experiments_runner is not None:
             self.experiments_runner.stop()
@@ -477,8 +479,11 @@ class Window(tk.Tk):
         self.button_stop_simulation['state'] = stop_simulation
 
     def generation_ended(self):
+
+
         if not self.queue.empty():
             ga_info = self.queue.get()
+
             if ga_info.run_ended:
                 self.queue.queue.clear()
                 self.after_cancel(self.after_id)
@@ -643,11 +648,13 @@ class SearchSolver(threading.Thread):
             problem = WarehouseProblemSearch(state, goal_cell)
 
             solution = self.agent.solve_problem(problem)
+
+            self.agent.set_solution_by_pair(pair, solution)
+
             pair.value = int(solution.cost)
             # criou classe em que calucla pair.solution = WharehouseSolution(solution.problem, solution.goal_cell)
             pair.solution = solution
-            print("valor: ", pair.value, "start: ", pair.cell1, "finish: ", goal_cell)
-            print("------------")
+
         self.agent.search_method.stopped = True
         self.gui.problem_ga = WarehouseProblemGA(self.agent)
         self.gui.manage_buttons(data_set=tk.NORMAL, runSearch=tk.DISABLED, runGA=tk.NORMAL, stop=tk.DISABLED,

@@ -12,7 +12,8 @@ class WarehouseProblemGA(Problem):
         self.forklifts = agent_search.forklifts
         self.products = agent_search.products
         self.agent_search = agent_search
-        self.minDistance = 1000000
+        self.path = []
+
 
     def generate_individual(self) -> "WarehouseIndividual":
         # TODO
