@@ -1,5 +1,6 @@
 from agentsearch.problem import Problem
 from search_methods.node import Node
+from warehouse.cell import Cell
 
 
 class Solution:
@@ -8,10 +9,18 @@ class Solution:
         self.problem = problem
         self.goal_node = goal_node
         self.actions = []
+
+        self.all_path_cells = [] # guarda todas as celulas por onde o forklift passa, serve para ajudar com a inversao de celulas e fazer o caminho
+
         node = self.goal_node
         while node.parent is not None:
             self.actions.insert(0, node.state.action)
+            self.all_path_cells.insert(0, Cell(node.state.line_forklift, node.state.column_forklift))
+
             node = node.parent
+
+
+        self.all_path_cells.insert(0, Cell(node.state.line_forklift, node.state.column_forklift))
 
     @property
     def cost(self) -> int:

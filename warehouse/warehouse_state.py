@@ -12,7 +12,7 @@ class WarehouseState(State[Action]):
 
     def __init__(self, matrix: ndarray, rows, columns):
         super().__init__()
-        #TODO
+        # TODO
         self.goal = None
         self.forklift = None
         self.exit = None
@@ -21,23 +21,10 @@ class WarehouseState(State[Action]):
         self.columns = columns
         self.matrix = np.copy(matrix).astype(int)
 
-
         self.line_forklift = None
         self.column_forklift = None
         self.line_exit = None
         self.column_exit = None
-
-
-    def can_move_up(self) -> bool:
-        # TODO
-        if self.forklift.line - 1 >= self.rows:
-            return False
-        if self.matrix[self.forklift.line - 1][self.forklift.column] == constants.EMPTY:
-            return True
-        if self.matrix[self.forklift.line - 1][self.forklift.column] == constants.EXIT:
-            return True
-
-        return False
 
     def can_move_right(self) -> bool:
         # TODO
@@ -46,6 +33,17 @@ class WarehouseState(State[Action]):
         if self.matrix[self.forklift.line][self.forklift.column + 1] == constants.EMPTY:
             return True
         if self.matrix[self.forklift.line][self.forklift.column + 1] == constants.EXIT:
+            return True
+
+        return False
+
+    def can_move_up(self) -> bool:
+        # TODO
+        if self.forklift.line - 1 >= self.rows:
+            return False
+        if self.matrix[self.forklift.line - 1][self.forklift.column] == constants.EMPTY:
+            return True
+        if self.matrix[self.forklift.line - 1][self.forklift.column] == constants.EXIT:
             return True
 
         return False
@@ -75,38 +73,42 @@ class WarehouseState(State[Action]):
     def move_up(self) -> None:
         # TODO
         if self.can_move_up():
-            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line - 1][self.forklift.column]
-            #self.line_forklift -= 1
+            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line - 1][
+                self.forklift.column]
+            # self.line_forklift -= 1
             self.set_forklift(self.forklift.line - 1, self.forklift.column)
             self.matrix[self.forklift.line][self.forklift.column] = constants.FORKLIFT
-            #print("Mexe cima")
+            # print("Mexe cima")
 
     def move_right(self) -> None:
         # TODO
         if self.can_move_right():
-            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line][self.forklift.column + 1]
-            #self.column_forklift += 1
-            self.set_forklift(self.forklift.line, self.forklift.column +1)
+            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line][
+                self.forklift.column + 1]
+            # self.column_forklift += 1
+            self.set_forklift(self.forklift.line, self.forklift.column + 1)
             self.matrix[self.forklift.line][self.forklift.column] = constants.FORKLIFT
-            #print("Mexe direita")
+            # print("Mexe direita")
 
     def move_down(self) -> None:
         # TODO
         if self.can_move_down():
-            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line + 1][self.forklift.column]
-            #self.line_forklift += 1
+            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line + 1][
+                self.forklift.column]
+            # self.line_forklift += 1
             self.set_forklift(self.forklift.line + 1, self.forklift.column)
             self.matrix[self.forklift.line][self.forklift.column] = constants.FORKLIFT
-            #print("Mexe baixo")
+            # print("Mexe baixo")
 
     def move_left(self) -> None:
         # TODO
         if self.can_move_left():
-            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line][self.forklift.column - 1]
-            #self.column_forklift -= 1
+            self.matrix[self.forklift.line][self.forklift.column] = self.matrix[self.forklift.line][
+                self.forklift.column - 1]
+            # self.column_forklift -= 1
             self.set_forklift(self.forklift.line, self.forklift.column - 1)
             self.matrix[self.forklift.line][self.forklift.column] = constants.FORKLIFT
-            #print("Mexe esqeurda")
+            # print("Mexe esqeurda")
 
     def get_cell_color(self, row: int, column: int) -> Color:
         if row == self.line_exit and column == self.column_exit and (
@@ -155,6 +157,3 @@ class WarehouseState(State[Action]):
 
     def set_goal(self, line, column):
         self.goal = Cell(line, column)
-
-
-
