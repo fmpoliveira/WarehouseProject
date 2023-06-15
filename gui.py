@@ -601,7 +601,6 @@ class ExperimentsRunner(threading.Thread):
             experiment.run()
 
         self.gui.text_best.insert(tk.END, '')
-        self.gui.text_worst.insert(tk.END, '')
         if self.thread_running:
             self.gui.entry_status.delete(0, tk.END)
             self.gui.entry_status.insert(tk.END, 'Done')
@@ -648,13 +647,9 @@ class SearchSolver(threading.Thread):
                 goal_cell = pair.cell2
 
             problem = WarehouseProblemSearch(state, goal_cell)
-
             solution = self.agent.solve_problem(problem)
-
             self.agent.set_solution_by_pair(pair, solution)
-
             pair.value = int(solution.cost)
-            # criou classe em que calucla pair.solution = WharehouseSolution(solution.problem, solution.goal_cell)
             pair.solution = solution
 
         self.agent.search_method.stopped = True

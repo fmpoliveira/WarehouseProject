@@ -1,3 +1,6 @@
+import copy
+
+import constants
 from experiments.experiments_factory import ExperimentsFactory
 from experiments.experiment import Experiment
 from experiments.experiment_listener import ExperimentListener
@@ -11,8 +14,10 @@ from ga.genetic_operators.mutation_insert import MutationInsert
 from ga.genetic_algorithm import GeneticAlgorithm
 from experiments_statistics.statistic_best_in_run import StatisticBestInRun
 from experiments_statistics.statistic_best_average import StatisticBestAverage
+from warehouse.cell import Cell
 from warehouse.warehouse_agent_search import read_state_from_txt_file, WarehouseAgentSearch
 from warehouse.warehouse_problemforGA import WarehouseProblemGA
+from warehouse.warehouse_problemforSearch import WarehouseProblemSearch
 from warehouse.warehouse_state import WarehouseState
 
 
@@ -65,6 +70,34 @@ class WarehouseExperimentsFactory(ExperimentsFactory):
         agent_search = WarehouseAgentSearch(WarehouseState(matrix, num_rows, num_columns))
         # TODO calculate pair distances
         self.problem = WarehouseProblemGA(agent_search)
+
+        for pair in agent_search.pairs:
+            if agent_search.search_method.stopped:
+                return
+            state = copy.copy(agent_search.initial_environment)
+            state.set_goal(pair.cell2.line, pair.cell2.column)
+            state.set_exit(agent_search.exit.line, agent_search.exit.column)
+            if pair.cell1 not in agent_search.forklifts:
+                if pair.cell1.column + 1 < state.columns and state.matrix[pair.cell1.line][
+                    pair.cell1.column + 1] == constants.EMPTY:
+                    state.set_forklift(pair.cell1.line, pair.cell1.column + 1)
+                else:
+                    state.set_forklift(pair.cell1.line, pair.cell1.column - 1)
+            else:
+                state.set_forklift(pair.cell1.line, pair.cell1.column)
+
+            if pair.cell2 != agent_search.exit:
+                if pair.cell2.column + 1 < state.columns and state.matrix[pair.cell2.line][
+                    pair.cell2.column + 1] == constants.EMPTY:
+                    goal_cell = Cell(pair.cell2.line, pair.cell2.column + 1)
+                else:
+                    goal_cell = Cell(pair.cell2.line, pair.cell2.column - 1)
+            else:
+                goal_cell = pair.cell2
+            problemSearch = WarehouseProblemSearch(state, goal_cell)
+            solution = agent_search.solve_problem(problemSearch)
+            agent_search.set_solution_by_pair(pair, solution)
+
 
         experiment_textual_representation = self.build_experiment_textual_representation()
         experiment_header = self.build_experiment_header()

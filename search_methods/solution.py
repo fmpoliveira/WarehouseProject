@@ -19,7 +19,6 @@ class Solution:
 
             node = node.parent
 
-
         self.all_path_cells.insert(0, Cell(node.state.line_forklift, node.state.column_forklift))
 
     @property

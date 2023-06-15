@@ -1,8 +1,8 @@
-Runs: 2
+Runs: 1
 
-Population_size: 100
+Population_size: 100, 50
 
-Max_generations: 100
+Max_generations: 100, 50
 
 # --------------------------------
 
@@ -12,13 +12,13 @@ Tournament_size: 2, 4
 
 # --------------------------------
 
-Recombination: pmx
+Recombination: pmx, recombination2
 
 Recombination_probability: 0.7
 
 # --------------------------------
 
-Mutation: insert
+Mutation: insert, mutation2
 
 Mutation_probability: 0.1
 

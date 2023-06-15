@@ -54,6 +54,7 @@ class WarehouseAgentSearch(Agent):
 
 
 
+
     def __str__(self) -> str:
         str = "Pairs:\n"
         for p in self.pairs:

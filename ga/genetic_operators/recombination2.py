@@ -39,8 +39,6 @@ class Recombination2(Recombination):
         child2 = copyInd1 + copyInd2
         random.shuffle(child2)
 
-
-
         ind1.genome = child1
         ind2.genome = child2
 

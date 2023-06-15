@@ -77,7 +77,6 @@ class WarehouseIndividual(IntVectorIndividual):
         is_reversed = False
 
         for i in range(len(arr) - 1):
-
             initial_position = arr[i]
             next_position = arr[i + 1]
             key_cell = Pair(initial_position, next_position)
@@ -85,12 +84,10 @@ class WarehouseIndividual(IntVectorIndividual):
             if key_cell not in self.problem.agent_search.solution_by_pair:
                 key_cell = Pair(next_position, initial_position)
                 is_reversed = True
-
             if key_cell not in self.paths_forklifts:
                 self.paths_forklifts[key_cell] = []
 
             list_solution_by_pair = self.problem.agent_search.get_solution_by_pair(key_cell)
-
             list_total_actions = list_solution_by_pair.actions
 
             if is_reversed:
@@ -98,21 +95,20 @@ class WarehouseIndividual(IntVectorIndividual):
                 list_total_actions = self.reverse_actions(list_total_actions)
 
             self.paths_forklifts[key_cell] = list_total_actions
-
-            is_reversed = False
-
             total += list_solution_by_pair.cost
 
         # penalizar colisões
         # COLISOES: MESMA CELULA
-        if len(self.problem.forklifts) > 1:
-            for cell_key, values in self.paths_forklifts.items():
-                print(values)
-                path_cell_list = self.problem.agent_search.get_solution_by_pair(cell_key)
-                ## Alterar o modo como construimos a key do self.paths_forklist para aceitar o path - FEITO
-                ## Depois para cada par (key do self_forklifts) vamos buscar ao agentSearch, o solution_by_pair.all_path_cells e juntamos tudo num array
-                ## Fazemos isto para o forklift atual e para o anterior
-                ## Efetuamos a comparação por index
+        #if len(self.problem.forklifts) > 1:
+        #    for forklift_index, forklift_cell in enumerate(self.problem.forklifts):
+        #        for pair_key in self.paths_forklifts.keys():
+        #            solution_for_pair = self.problem.agent_search.get_solution_by_pair(pair_key)
+        #            self.teste[forklift_index].extend(solution_for_pair.all_path_cells)
+
+                    ## Alterar o modo como construimos a key do self.paths_forklist para aceitar o path - FEITO
+                    ## Depois para cada par (key do self_forklifts) vamos buscar ao agentSearch, o solution_by_pair.all_path_cells e juntamos tudo num array
+                    ## Fazemos isto para o forklift atual e para o anterior
+                    ## Efetuamos a comparação por index
 
         # adiciona o novo valor à lista ordenada de maior para menor
         if total not in self.problem.agent_search.weight_values:
@@ -123,6 +119,7 @@ class WarehouseIndividual(IntVectorIndividual):
         if total > self.worst_value:
             self.worst_value = total
 
+        is_reversed = False
         return total
 
     def reverse_actions(self, list_actions):
