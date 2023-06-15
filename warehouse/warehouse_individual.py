@@ -76,10 +76,8 @@ class WarehouseIndividual(IntVectorIndividual):
         total = self.weight
         is_reversed = False
 
-        if arr[0] not in self.paths_forklifts:
-            self.paths_forklifts[arr[0]] = []
-
         for i in range(len(arr) - 1):
+
             initial_position = arr[i]
             next_position = arr[i + 1]
             key_cell = Pair(initial_position, next_position)
@@ -87,6 +85,9 @@ class WarehouseIndividual(IntVectorIndividual):
             if key_cell not in self.problem.agent_search.solution_by_pair:
                 key_cell = Pair(next_position, initial_position)
                 is_reversed = True
+
+            if key_cell not in self.paths_forklifts:
+                self.paths_forklifts[key_cell] = []
 
             list_solution_by_pair = self.problem.agent_search.get_solution_by_pair(key_cell)
 
@@ -96,7 +97,7 @@ class WarehouseIndividual(IntVectorIndividual):
                 list_total_actions.reverse()
                 list_total_actions = self.reverse_actions(list_total_actions)
 
-            self.paths_forklifts[arr[0]].append(list_total_actions)
+            self.paths_forklifts[key_cell] = list_total_actions
 
             is_reversed = False
 
@@ -107,16 +108,11 @@ class WarehouseIndividual(IntVectorIndividual):
         if len(self.problem.forklifts) > 1:
             for cell_key, values in self.paths_forklifts.items():
                 print(values)
-                ## Alterar o modo como construimos a key do self.paths_forklist para aceitar o path
+                path_cell_list = self.problem.agent_search.get_solution_by_pair(cell_key)
+                ## Alterar o modo como construimos a key do self.paths_forklist para aceitar o path - FEITO
                 ## Depois para cada par (key do self_forklifts) vamos buscar ao agentSearch, o solution_by_pair.all_path_cells e juntamos tudo num array
                 ## Fazemos isto para o forklift atual e para o anterior
                 ## Efetuamos a comparação por index
-
-
-
-
-
-
 
         # adiciona o novo valor à lista ordenada de maior para menor
         if total not in self.problem.agent_search.weight_values:
@@ -190,7 +186,6 @@ class WarehouseIndividual(IntVectorIndividual):
     def obtain_all_path(self):
         # TODO
         return self.paths_forklifts, len(self.paths_forklifts)
-
 
     def __str__(self):
         string = 'Fitness: ' + f'{self.fitness}' + '\n'
