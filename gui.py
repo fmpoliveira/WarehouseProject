@@ -190,8 +190,6 @@ class Window(tk.Tk):
         self.text_best = tk.Text(master=self.panel_best, state="normal", height=20, width=40)
         self.text_best.pack()
 
-
-
         # 3 - BOTTOM PANEL --------------------------------------------------
 
         self.button_experiments = tk.Button(master=self.panel_bottom, text='Open experiments',
@@ -620,7 +618,7 @@ class SearchSolver(threading.Thread):
         self.agent.stop()
 
     def run(self):
-        # TODO calculate pairs distances
+        # TODO done
         for pair in self.agent.pairs:
             if self.agent.search_method.stopped:
                 return
@@ -690,10 +688,25 @@ class SolutionRunner(threading.Thread):
                         self.state.matrix[old_cell[j].line][old_cell[j].column] = constants.EMPTY
                     new_cell = forklift_path[j][step + 1]
                     new_cells.append(new_cell)
-                    self.state.matrix[new_cell.line][new_cell.column] = constants.FORKLIFT
-                    old_cell[j] = new_cell
-                else:
-                    self.state.matrix[old_cell[j].line][old_cell[j].column] = constants.FORKLIFT
+                    if self.state.matrix[new_cell.line][new_cell.column] == constants.EXIT:
+                        self.state.matrix[new_cell.line][new_cell.column] = constants.EXIT
+                    else:
+                        self.state.matrix[new_cell.line][new_cell.column] = constants.FORKLIFT
+                        old_cell[j] = new_cell
+
+                    column_index_right = new_cell.column + 1
+                    column_index_left = new_cell.column - 1
+
+                    if column_index_right < self.state.columns and self.state.matrix[new_cell.line][
+                        column_index_right] == constants.PRODUCT:
+                        self.state.matrix[new_cell.line][column_index_right] = constants.PRODUCT_CATCH
+                    if column_index_left > -1 and self.state.matrix[new_cell.line][
+                        column_index_left] == constants.PRODUCT:
+                        self.state.matrix[new_cell.line][column_index_left] = constants.PRODUCT_CATCH
+
+
+                # else:
+                #     self.state.matrix[old_cell[j].line][old_cell[j].column] = constants.FORKLIFT
 
                 # TODO put the catched products in black
             self.gui.queue.put((copy.deepcopy(self.state), step, False))

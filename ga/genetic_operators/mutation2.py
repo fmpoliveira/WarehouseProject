@@ -9,6 +9,7 @@ class Mutation2(Mutation):
         super().__init__(probability)
 
     def mutate(self, ind: IntVectorIndividual) -> None:
+        # TODO done
         num_genes = len(ind.genome)
         rand_pos = GeneticAlgorithm.rand.randint(0, num_genes - 1)
 

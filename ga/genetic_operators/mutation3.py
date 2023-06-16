@@ -11,6 +11,7 @@ class Mutation3(Mutation):
         super().__init__(probability)
 
     def mutate(self, ind: IntVectorIndividual) -> None:
+        # TODO done
         # 1. Selecione aleatoriamente um valordo array original.
         # 2. Remova esse valor do array original
         # 3. Shuffle do array original

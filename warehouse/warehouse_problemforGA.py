@@ -12,8 +12,6 @@ class WarehouseProblemGA(Problem):
         self.forklifts = agent_search.forklifts
         self.products = agent_search.products
         self.agent_search = agent_search
-        self.path = []
-
 
     def generate_individual(self) -> "WarehouseIndividual":
         # TODO
@@ -32,4 +30,3 @@ class WarehouseProblemGA(Problem):
         string = "# of products: "
         string += f'{len(self.products)}'
         return string
-

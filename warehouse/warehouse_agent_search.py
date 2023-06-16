@@ -20,7 +20,7 @@ class WarehouseAgentSearch(Agent):
         self.forklifts = []
         self.products = []
         self.solution_by_pair = {}
-        self.weight_values = []
+        self.worst_global_weight = -1
         self.exit = None
         self.pairs = []
         for i in range(environment.rows):
@@ -51,9 +51,6 @@ class WarehouseAgentSearch(Agent):
 
     def get_solution_by_pair(self, key):
         return self.solution_by_pair[key]
-
-
-
 
     def __str__(self) -> str:
         str = "Pairs:\n"

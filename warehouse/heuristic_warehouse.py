@@ -13,7 +13,7 @@ class HeuristicWarehouse(Heuristic[WarehouseProblemSearch, WarehouseState]):
         self._cols_goal_matrix = None
 
     def compute(self, state: WarehouseState) -> float:
-        # TODO
+        # TODO done
         goal_position = state.goal
         self._lines_goal_matrix = goal_position.line
         self._cols_goal_matrix = goal_position.column

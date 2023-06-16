@@ -12,6 +12,7 @@ class Recombination2(Recombination):
         super().__init__(probability)
 
     def recombine(self, ind1: Individual, ind2: Individual) -> None:
+        # TODO done
         num_genes = ind1.num_genes
 
         copyInd1 = copy.deepcopy(ind1.genome)
