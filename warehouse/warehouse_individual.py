@@ -96,6 +96,8 @@ class WarehouseIndividual(IntVectorIndividual):
 
         self.all_paths_forklifts.append(line_path)
 
+        # guarda os steps para cada forklift
+        self.steps_values.append(len(line_path))
         # penalizar colisões
         # COLISOES: MESMA CELULA
         # if len(self.problem.forklifts) > 1:
@@ -111,8 +113,6 @@ class WarehouseIndividual(IntVectorIndividual):
         # se o total calculado for maior que o pior resultado possivel nesta iteração, troca
         if total > self.worst_value:
             self.worst_value = total
-
-        self.steps_values.append(total)  # guarda os steps para cada forklift
 
         return total
 
