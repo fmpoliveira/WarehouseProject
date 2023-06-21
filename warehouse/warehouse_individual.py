@@ -17,7 +17,7 @@ class WarehouseIndividual(IntVectorIndividual):
         self.worst_value = None  # guarda o custo do forklift com o pior caminho
         self.all_paths_forklifts = []  # guarda o caminho todo que os forklifts percorrem
         self.forklifts_and_products = {}  # guarda as cells com os produtos que vai buscar e a saida
-
+        self.all_fitness = [] # guarda todos os fitness de cada linha do path
         # TODO - done
 
     def compute_fitness(self) -> float:
@@ -26,6 +26,7 @@ class WarehouseIndividual(IntVectorIndividual):
         self.worst_value = 0
         self.steps_values = []
         self.all_paths_forklifts = []
+        self.all_fitness = []
         aux = []
         index = None
 
@@ -93,13 +94,22 @@ class WarehouseIndividual(IntVectorIndividual):
 
             total += list_solution_by_pair.cost
             is_reversed = False
-
-        self.all_paths_forklifts.append(line_path)
-
-        # guarda os steps para cada forklift
-        self.steps_values.append(len(line_path))
+        print("total", total)
         # penalizar colisões
         # COLISOES: MESMA CELULA
+        for line in self.all_paths_forklifts:
+            for cell_line, cell_path_line in zip(line, line_path): # faz um tuple entre cell_line e cell_path_line ("2-6", "0-4")
+                if cell_line == cell_path_line:
+                    print("colisão")
+                    total += 10
+
+        self.all_paths_forklifts.append(line_path)
+        self.all_fitness.append(total)
+        print("total", total)
+        print("#####")
+        # guarda os steps para cada forklift
+        self.steps_values.append(len(line_path))
+
         # if len(self.problem.forklifts) > 1:
         #    for forklift_index, forklift_cell in enumerate(self.problem.forklifts):
         #        for pair_key in self.paths_forklifts.keys():
@@ -134,7 +144,8 @@ class WarehouseIndividual(IntVectorIndividual):
                     string += f"{forklift[index]} -> "
                 else:
                     string += "S \n\n"
-            string += 'Steps: ' + str(self.steps_values[i]) + '\n\n'
+            string += 'Steps: ' + str(self.steps_values[i]) + '\n'
+            string += 'Fitness: ' + str(self.all_fitness[i]) + '\n\n'
             i += 1
         return string
 
@@ -151,5 +162,6 @@ class WarehouseIndividual(IntVectorIndividual):
         new_instance.all_paths_forklifts = self.all_paths_forklifts
         new_instance.forklifts_and_products = self.forklifts_and_products
         new_instance.steps_values = self.steps_values
+        new_instance.all_fitness = self.all_fitness
         # TODO done
         return new_instance
