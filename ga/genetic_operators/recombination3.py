@@ -18,19 +18,19 @@ class Recombination3(Recombination):
         copyInd2 = copy.deepcopy(ind2.genome)
         child1 = []
         child2 = []
-        # Primeiro child fica com a primeira metade do ind2 e o segundo child fica com primeira metade do ind1
+        # Primeiro child fica com a primeira terço do ind2 e o segundo child fica com primeira terço do ind1
         # Removemos esses individuos dos originais
         # Juntamos os elementos dos originais num array
         # Aleatoriamente geramos um numero que corresponde ao index do array com todos
         # Vamos adicionando a cada ind novo esse elemento caso não tenha, até ambos se encontrarem completos
 
-        middle_index = math.floor(num_genes / 3)
+        index_cut = math.floor(num_genes / 3)
 
-        child1 = copyInd2[:middle_index]
-        child2 = copyInd1[:middle_index]
+        child1 = copyInd2[:index_cut]
+        child2 = copyInd1[:index_cut]
 
-        del copyInd1[:middle_index]
-        del copyInd2[:middle_index]
+        del copyInd1[:index_cut]
+        del copyInd2[:index_cut]
 
         all_individuals_left = copyInd1 + copyInd2
 

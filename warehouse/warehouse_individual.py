@@ -17,7 +17,7 @@ class WarehouseIndividual(IntVectorIndividual):
         self.worst_value = None  # guarda o custo do forklift com o pior caminho
         self.all_paths_forklifts = []  # guarda o caminho todo que os forklifts percorrem
         self.forklifts_and_products = {}  # guarda as cells com os produtos que vai buscar e a saida
-        self.all_fitness = [] # guarda todos os fitness de cada linha do path
+        self.all_fitness = []  # guarda todos os fitness de cada linha do path
         # TODO - done
 
     def compute_fitness(self) -> float:
@@ -28,11 +28,12 @@ class WarehouseIndividual(IntVectorIndividual):
         self.all_paths_forklifts = []
         self.all_fitness = []
         aux = []
-        index = None
+        forklift_index = 0
 
         forklifts_count = len(self.problem.forklifts) - 1
 
         for i in range(self.num_genes):
+
             # produto
             if self.genome[i] <= len(self.problem.products):
                 product_index = self.genome[i] - 1
@@ -41,12 +42,10 @@ class WarehouseIndividual(IntVectorIndividual):
 
             # forklift
             else:
-                # exemplo: [2,4,5,1,3]
-                # com o valor que está no array para o forklift (5) tiramos o tamanho dos produtos (5), logo vai buscar o 1 index
-                index = self.genome[i] - len(self.genome)
-                self.compute_weight_for_path_of_forklift(aux, index)
+                self.compute_weight_for_path_of_forklift(aux, forklift_index)
                 forklifts_count -= 1
                 aux = []
+                forklift_index += 1
 
         # if it only has 1 forklift
         if len(self.problem.forklifts) == 1:
@@ -54,7 +53,7 @@ class WarehouseIndividual(IntVectorIndividual):
 
             # if it has more than 1 forklift and count for the index is the first one
         elif forklifts_count == 0 and len(self.problem.forklifts) > 1:
-            self.compute_weight_for_path_of_forklift(aux, index + 1)
+            self.compute_weight_for_path_of_forklift(aux, forklift_index)
 
         self.fitness = self.worst_value
 
@@ -94,27 +93,20 @@ class WarehouseIndividual(IntVectorIndividual):
 
             total += list_solution_by_pair.cost
             is_reversed = False
-        print("total", total)
+
         # penalizar colisões
         # COLISOES: MESMA CELULA
         for line in self.all_paths_forklifts:
-            for cell_line, cell_path_line in zip(line, line_path): # faz um tuple entre cell_line e cell_path_line ("2-6", "0-4")
+            for cell_line, cell_path_line in zip(line,
+                                                 line_path):  # faz um tuple entre cell_line e cell_path_line ("2-6", "0-4")
                 if cell_line == cell_path_line:
-                    print("colisão")
                     total += 10
 
         self.all_paths_forklifts.append(line_path)
         self.all_fitness.append(total)
-        print("total", total)
-        print("#####")
+
         # guarda os steps para cada forklift
         self.steps_values.append(len(line_path))
-
-        # if len(self.problem.forklifts) > 1:
-        #    for forklift_index, forklift_cell in enumerate(self.problem.forklifts):
-        #        for pair_key in self.paths_forklifts.keys():
-        #            solution_for_pair = self.problem.agent_search.get_solution_by_pair(pair_key)
-        #            self.teste[forklift_index].extend(solution_for_pair.all_path_cells)
 
         # adiciona o novo valor à lista ordenada de maior para menor
         if total > self.problem.agent_search.worst_global_weight:

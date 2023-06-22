@@ -14,11 +14,15 @@ class Mutation2(Mutation):
         rand_pos = GeneticAlgorithm.rand.randint(0, num_genes - 1)
 
         save_1 = ind.genome[rand_pos]
+        rand_aux = rand_pos  # se a posição for zero, temos que aumentar o numero, uma vez que o valor min de um elemento do genorma é 1
+
+        if rand_pos == 0:
+            rand_aux += 1
 
         for i in range(num_genes - 1):
-            if ind.genome[i] == rand_pos:
+            if ind.genome[i] == rand_aux:
                 ind.genome[i] = save_1
-                ind.genome[rand_pos] = rand_pos
+                ind.genome[rand_pos] = rand_aux
 
     def __str__(self):
         return "Mutation 2 (" + f'{self.probability}' + ")"

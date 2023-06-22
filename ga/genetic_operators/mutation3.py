@@ -12,7 +12,7 @@ class Mutation3(Mutation):
 
     def mutate(self, ind: IntVectorIndividual) -> None:
         # TODO done
-        # 1. Selecione aleatoriamente um valordo array original.
+        # 1. Selecione aleatoriamente um valor do array original.
         # 2. Remova esse valor do array original
         # 3. Shuffle do array original
         # 4. Inserir o valor selecionado aleatoriamente numa posição aleatória do array shuffled
