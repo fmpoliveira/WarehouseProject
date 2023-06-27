@@ -1,2 +1,0 @@
-Cell 1 se for objeto, calcula-se diretamente da sua posição ou colocamos num corredor?
-Problemas na heuristica, a contrução da matriz em linha (_gool_line) está a arrebentar e não sabemos. E o programa não devolve solução quando encontra o EXIT

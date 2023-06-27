@@ -1,0 +1,96 @@
+
+Population size: 200
+Max generations: 50
+Selection: Tournament selection(4)
+Recombination: PMX recombination (0.8)
+Mutation:Insert Mutation (0.2)
+Fitness: 122
+[5, 11, 18, 20, 17, 13, 14, 10, 8, 4, 12, 16, 15, 22, 6, 2, 1, 3, 7, 9, 19, 21]
+
+
+Worst Fitness 746
+
+Forklifts Path: 
+
+3-13 -> 3-15 -> 9-18 -> 15-20 -> 16-15 -> 15-17 -> 14-9 -> 15-11 -> 9-9 -> 8-11 -> 1-0 -> 2-2 -> 4-2 -> S 
+
+Steps: 79
+Fitness: 78
+
+9-1 -> 15-14 -> 15-12 -> 11-14 -> 3-11 -> 2-8 -> 4-6 -> 9-6 -> 16-3 -> S 
+
+Steps: 43
+Fitness: 120
+
+16-10 -> S 
+
+Steps: 3
+Fitness: 122
+
+
+
+# --------------------------------------------------------------
+
+Population size: 200
+Max generations: 50
+Selection: Tournament selection(4)
+Recombination: PMX recombination (0.8)
+Mutation:Mutation 2 (0.2)
+Fitness: 134
+[5, 11, 18, 20, 17, 15, 16, 12, 14, 13, 10, 4, 8, 7, 3, 1, 2, 6, 9, 22, 19, 21]
+
+
+Worst Fitness 740
+
+Forklifts Path: 
+
+3-13 -> 3-15 -> 9-18 -> 15-20 -> 16-15 -> 15-17 -> 15-12 -> 15-14 -> 11-14 -> 15-11 -> 14-9 -> 9-9 -> 3-11 -> 8-11 -> 4-6 -> 2-8 -> 1-0 -> 2-2 -> 4-2 -> 9-6 -> S 
+
+Steps: 115
+Fitness: 114
+
+9-1 -> 16-3 -> S 
+
+Steps: 19
+Fitness: 132
+
+16-10 -> S 
+
+Steps: 3
+Fitness: 134
+
+
+
+# --------------------------------------------------------------
+
+Population size: 200
+Max generations: 50
+Selection: Tournament selection(4)
+Recombination: PMX recombination (0.8)
+Mutation:Mutation 3 (0.2)
+Fitness: 134
+[5, 11, 18, 20, 17, 12, 13, 14, 10, 8, 4, 3, 2, 1, 6, 7, 9, 16, 15, 21, 19, 22]
+
+
+Worst Fitness 1012
+
+Forklifts Path: 
+
+3-13 -> 15-11 -> 3-11 -> 15-14 -> S 
+
+Steps: 115
+Fitness: 114
+
+9-1 -> 15-12 -> 4-2 -> 9-9 -> 2-2 -> 8-11 -> 2-8 -> 16-3 -> 15-17 -> 16-15 -> 1-0 -> 4-6 -> 9-6 -> 11-14 -> 3-15 -> 14-9 -> 9-18 -> 15-20 -> S 
+
+Steps: 19
+Fitness: 132
+
+16-10 -> S 
+
+Steps: 3
+Fitness: 134
+
+
+
+# --------------------------------------------------------------
