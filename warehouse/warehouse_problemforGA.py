@@ -8,13 +8,13 @@ import numpy as np
 
 class WarehouseProblemGA(Problem):
     def __init__(self, agent_search: WarehouseAgentSearch):
-        # TODO
+        # TODO done
         self.forklifts = agent_search.forklifts
         self.products = agent_search.products
         self.agent_search = agent_search
 
     def generate_individual(self) -> "WarehouseIndividual":
-        # TODO
+        # TODO done
         length_individual = (len(self.forklifts) + len(self.products)) - 1
         new_individual = WarehouseIndividual(self, length_individual)
         while len(new_individual.genome) != length_individual:

@@ -28,7 +28,7 @@ class WarehouseProblemSearch(Problem[WarehouseState]):
         return successor
 
     def is_goal(self, state: WarehouseState) -> bool:
-        # TODO Done
+        # TODO done
 
         if state.forklift.line + 1 < state.rows or state.forklift.column + 1 < state.columns:
             if state.forklift.line == self.goal_position.line and state.forklift.column == self.goal_position.column:

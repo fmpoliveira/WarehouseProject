@@ -19,7 +19,7 @@ class Recombination3(Recombination):
         child1 = []
         child2 = []
         # Primeiro child fica com a primeira terço do ind2 e o segundo child fica com primeira terço do ind1
-        # Removemos esses individuos dos originais
+        # Removemos esses elementos das copias
         # Juntamos os elementos dos originais num array
         # Aleatoriamente geramos um numero que corresponde ao index do array com todos
         # Vamos adicionando a cada ind novo esse elemento caso não tenha, até ambos se encontrarem completos
